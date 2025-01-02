@@ -1,0 +1,24 @@
+name: Submit agama-integration-tests
+
+on:
+  # runs on pushes targeting the default branch
+  push:
+    branches:
+      - master
+      - release
+    # runs when creating a release tag
+    tags:
+      - v[0-9]*
+
+  # allow running manually
+  workflow_dispatch:
+
+jobs:
+  update_staging:
+    uses: agama-project/agama/.github/workflows/obs-staging-shared.yml@master
+    # pass all secrets
+    secrets: inherit
+    with:
+      install_packages: obs-service-node_modules
+      package_name: agama-integration-tests
+      service_file: package/_service

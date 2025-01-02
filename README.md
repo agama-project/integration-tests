@@ -1,93 +1,111 @@
 # Agama Integration Tests
 
-This is directory contains support writing integration tests for Agama. It is
-based on the [Puppeteer](https://pptr.dev/) library.
+This is repository contains support for writing integration tests for Agama and few example tests.
 
-Currently there is only one simple test which only selects the product to
-install and sets the root password. More tests will be implemented separately in
-the openQA, this package basically just ensures that the needed libraries and
-tools are present on the Live ISO.
+It uses the [Puppeteer](https://pptr.dev/) library for driving and communicating with a web browser.
 
-## Running Tests
+Currently there is only one simple test which just sets the root password and a test for taking
+screenshots automatically. More tests will be implemented separately in the openQA, this package
+basically serves as a template for writing and building tests.
 
-The integration tests can be started from a Git checkout or from a Live ISO.
+## Webpack advantages
 
-### Live ISO
+- Puppeteer and its dependencies are not needed on the Live ISO
+- The tests can use additional libraries if needed, they do not need to depend on the Live ISO
+  content
+- The used Puppeteer version is not bound to the Live ISO (it only needs to be compatible with the
+  included Firefox browser), the version update is simple
+- The builtin Node.js test runner supports the [Test Anything
+  Protocol](https://en.wikipedia.org/wiki/Test_Anything_Protocol) (TAP), already supported by openQA
 
-To run the test from Live ISO:
+## Preparation
 
-```sh
-agama-integration-tests /usr/share/agama/integration-tests/tests/test_root_password.js
+First install the needed NPM packages:
+
+    npm ci
+
+## Compilation
+
+To compile the source test files run:
+
+    npm run build
+
+This compiles the sources into the `dist` subdirectory.
+
+To generate the target files without optimizations run this command:
+
+    npm run devel
+
+In this case the generated files are a bit bigger.
+
+To rebuild the tests during development automatically you can run:
+
+    npm run watch
+
+This builds the tests in development mode to have faster builds.
+
+By default the ESlint checks are enabled, if you want to disable them set `ESLINT=0` environment
+variable. For example use `ESLINT=0 npm run watch`.
+
+## Running the tests
+
+The generated tests are executable, simply run the file (this connects to the locally running Agama
+instance, to use a remote one see the options below):
+
+    ./dist/test_root_password.js
+
+If you copy the test to a different machine do not forget to also copy the `vendor.js` file and
+`*.map` files if you want to get backtrace locations in the original source code. To use the map
+files use the `--enable-source-maps` node option:
+
+    node --enable-source-maps ./dist/test_root_password.js
+
+To use the TAP output format, use the `--test-reporter` Node.js option:
+
+    node --test-reporter=tap ./dist/test_root_password.cjs
+
+Alternatively it is possible to implement [own test reporter](
+https://www.nearform.com/insights/writing-a-node-js-test-reporter/).
+
+The test currently accepts several optional arguments, run
+`./dist/test_root_password.js --help`:
+
+```
+Usage: test_root_password [options]
+
+Run a simple Agama integration test
+
+Options:
+  -u, --url <url>                 Agama server URL (default:
+                                  "http://localhost")
+  -p, --password <password>       Agama login password (default: "linux")
+  -r, --root-password <password>  Target root login password (default:
+                                  "linux")
+  -b, --browser <browser>         Browser used for running the test (choices:
+                                  "firefox", "chrome", "chromium", default:
+                                  "firefox")
+  -h, --headed                    Run the browser in headed mode with UI (the
+                                  default is headless mode)
+  -d, --delay <miliseconds>       Delay between the browser actions, useful
+                                  in headed mode (default: 0)
+  -c, --continue                  Continue the test after a failure (the
+                                  default is abort on error)
+  --help                          display help for command
 ```
 
-This runs a headless test which expects the Agama is running on the local
-machine. See the [Options](#options) section below how to customize the test
-run.
+Full example for running the browser in the English locale, using local Chrome browser in headed
+mode and connecting to a remote Agama instance:
 
-### Git
+    LC_ALL=en_US.UTF-8 ./dist/test_root_password.js -h -d 50 -b chrome -u https://agama.local
 
-To run the test directly from Git checkout:
+## Running from Live ISO
 
-```sh
-./agama-integration-tests tests/test_root_password.js
-```
+The tests are also installed in the Agama Live ISO in the `/usr/share/agama/integration-tests`
+directory. You can run them the same way as from Git checkout described above, just use the
+`/usr/share/agama/integration-tests` path prefix.
 
-At the first run it installs Puppeteer and the dependant NPM packages. You can
-install them manually with this command:
+## Notes
 
-```sh
-PUPPETEER_SKIP_DOWNLOAD=true npm install --omit=optional
-```
-
-## Options
-
-The recommended command to run the test during development is
-
-```sh
-AGAMA_BROWSER=chromium AGAMA_SERVER=https://agama.local AGAMA_SLOWMO=50 \
-AGAMA_HEADLESS=false ./agama-integration-tests tests/test_root_password.js
-```
-
-The options are described below.
-
-### Test Browser
-
-By default the test uses the Firefox browser but it is possible to use Chromium
-or Google Chrome as well. See the [supported browsers](#supported-browsers)
-section below.
-
-Set `AGAMA_BROWSER=chromium` or `AGAMA_BROWSER=chrome` to use different
-browsers.
-
-### Headless Mode
-
-The test runs in headless mode (no UI displayed). For development or debugging
-it might be better to see the real browser running the test.
-
-Set `AGAMA_HEADLESS=false` to display the browser during the test.
-
-When running the test from the Live ISO you need to enable the X forwarding
-(`ssh -X` option) or set `DISPLAY=:0` to use the locally running X server.
-
-### Target Agama Server
-
-The test connects to a locally running Agama, for using a remote server set
-the `AGAMA_SERVER` to the server URL.
-
-### Slow Motion
-
-Because the browser is controlled by a script the actions might be too fast to
-watch. Use the `AGAMA_SLOWMO` variable with a delay in miliseconds between the
-actions. A reasonable value is round 50.
-
-## Supported Browsers
-
-The Puppeteer library was originally written for the Chromium browser, but later
-they added support also for the Firefox browser. However, not all features might
-be supported in Firefox, e.g. it cannot record a video of the test run. See
-more details in the [Puppeteer documentation](https://pptr.dev/webdriver-bidi).
-
-> [!NOTE]
-Unfortunately the Firefox version installed in SLE15 and openSUSE Leap 15.x is
-too old and does not work with Puppeteer. The version in openSUSE Tumbleweed
-works fine.
+- The tests use the Node.js built-in testing framework and the runner instead of Mocha.js (or any
+  similar framework) which needs a special test runner that cannot be easily bundled into the
+  generated file by Webpack.
