@@ -4,7 +4,7 @@ on:
   # runs on pushes targeting the default branch
   push:
     branches:
-      - master
+      - main
       - release
     # runs when creating a release tag
     tags:
