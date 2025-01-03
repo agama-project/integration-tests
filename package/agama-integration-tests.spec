@@ -44,8 +44,8 @@ dependencies.
 
 %build
 rm -f package-lock.json
-local-npm-registry %{_sourcedir} install --with=dev --legacy-peer-deps || ( find ~/.npm/_logs -name '*-debug.log' -print0 | xargs -0 cat; false)
-npm run build
+local-npm-registry %{_sourcedir} install --with=dev || ( find ~/.npm/_logs -name '*-debug.log' -print0 | xargs -0 cat; false)
+ESLINT=0 npm run build
 
 %install
 install -D -d -m 0755 %{buildroot}%{_datadir}/agama/integration-tests
