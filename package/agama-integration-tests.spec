@@ -30,6 +30,7 @@ Source12:       node_modules.sums
 %include %_sourcedir/node_modules.spec.inc
 BuildArch:      noarch
 BuildRequires:  local-npm-registry
+BuildRequires:  nodejs-devel
 Requires:       nodejs(engine) >= 18
 
 %description
