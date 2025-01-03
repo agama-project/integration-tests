@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const path = require("path");
 const fs = require("fs");
 const webpack = require("webpack");
@@ -51,11 +53,12 @@ module.exports = {
     ignored: /node_modules/,
   },
   plugins: [
-    process.env.ESLINT !== "0" && new ESLintPlugin({
-      configType: "flat",
-      extensions: ["js", "jsx", "ts", "tsx"],
-      failOnWarning: true,
-    }),
+    process.env.ESLINT !== "0" &&
+      new ESLintPlugin({
+        configType: "flat",
+        extensions: ["js", "jsx", "ts", "tsx"],
+        failOnWarning: true,
+      }),
     new webpack.SourceMapDevToolPlugin({
       filename: "[file].map",
       // skip the source maps for the vendor.js bundle, it is huge and in most cases (all?) we do
@@ -76,7 +79,7 @@ module.exports = {
       this.hooks.done.tap("Change permissions", (data) => {
         Object.keys(data.compilation.assets).forEach((file) => {
           if (file.match(/^test_.*\.js$/)) {
-            fs.chmodSync(`${__dirname}/dist/${file}`, 0o755);
+            fs.chmodSync(path.join(__dirname, "dist", file), 0o755);
           }
         });
       });

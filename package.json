@@ -8,8 +8,8 @@
     "build": "webpack --mode production",
     "devel": "webpack --mode development",
     "watch": "webpack --mode development --watch",
-    "eslint": "eslint src/",
-    "eslint:fix": "eslint --fix src/"
+    "eslint": "eslint src/ *.js",
+    "eslint:fix": "eslint --fix src/ *.js"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2.12.1",
