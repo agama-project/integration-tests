@@ -45,7 +45,14 @@ dependencies.
 
 %build
 rm -f package-lock.json
-local-npm-registry %{_sourcedir} install --with=dev || ( find ~/.npm/_logs -name '*-debug.log' -print0 | xargs -0 cat; false)
+
+# The --ignore-scripts option disables all NPM preinstall/postinstall scripts. It skips possible
+# rebuilds of the binary plugins in the dependent "bufferutil" and "utf-8-validate" NPM packages.
+# For some reason the rebuilds fail in OBS. But Webpack does not use the binaries in the final
+# bundle anyway (and the code falls back to a native JavaScript implementation) so we can disable
+# the rebuild scripts and then the package builds fine in OBS.
+local-npm-registry %{_sourcedir} install --ignore-scripts --with=dev || ( find ~/.npm/_logs -name '*-debug.log' -print0 | xargs -0 cat; false)
+
 ESLINT=0 npm run build
 
 %install
