@@ -56,8 +56,23 @@ describe("Agama screenshots", function () {
   setInitialRootPassword(options.rootPassword);
 
   it("should take overview page screenshot", async function () {
-    await page.locator("h3::-p-text('Overview')").wait();
+    await page.locator("main ::-p-text('Overview')").wait();
     await screenshot("overview");
+  });
+
+  it("should take localization page screenshot", async function () {
+    await page.locator("a[href='#/l10n']").click();
+    await page.locator("h3::-p-text('Time zone')").wait();
+    await screenshot("localization");
+  });
+
+  it("should take language selection screenshot", async function () {
+    await page.locator("a[href='#/l10n/locale/select']").click();
+    await page.type("input", "english");
+    // wait until the list is filtered and the non English entries are removed from the page
+    await page.waitForSelector("::-p-text('Afrikaans')", { hidden: true });
+    await screenshot("select-language");
+    await page.locator("button::-p-text(Cancel)").click();
   });
 
   it("should take storage page screenshot", async function () {
@@ -82,5 +97,15 @@ describe("Agama screenshots", function () {
     await page.locator("a[href='#/users']").click();
     await page.locator("h3::-p-text('First user')").wait();
     await screenshot("users");
+  });
+
+  it("should take installation confirmation popup screenshot", async function () {
+    // go to the overview
+    await page.locator("a[href='#/overview']").click();
+    await page.locator("main ::-p-text('Overview')").wait();
+    // click the install button
+    await page.locator("button::-p-text(Install)").click();
+    await page.locator("::-p-text('Confirm Installation')").wait();
+    await screenshot("install-button");
   });
 });
