@@ -32,7 +32,7 @@ describe("Agama test", function () {
   setInitialRootPassword(options.rootPassword);
 
   it("should display overview card", async function () {
-    await page.waitForSelector("h3::-p-text('Overview')");
+    await page.waitForSelector("main ::-p-text('Overview')");
   });
 
   setRootPassword("test");
