@@ -30,7 +30,8 @@ describe("Agama test", function () {
   optionalProductSelection("openSUSE Tumbleweed");
 
   it("should display overview card", async function () {
-    await page.waitForSelector("main ::-p-text('Overview')");
+    // refreshing the repositories might take long time, explicitly use a longer timeout
+    await page.waitForSelector("main ::-p-text('Overview')", { timeout: 60_000 });
   });
 
   setRootPassword("test");
