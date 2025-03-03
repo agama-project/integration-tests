@@ -5,13 +5,14 @@ import { it, page } from "../lib/helpers";
 // otherwise it expects the initial root password dialog
 export function optionalProductSelection(productName: string) {
   it("should optionally display the product selection dialog", async function () {
-    // Either the root password setting is displayed or there is
-    // the product selection page.
+    // Either the overview is displayed or there is the product selection page.
     const productSelectionDisplayed: boolean = await Promise.any([
-      page.waitForSelector("input#rootPassword").then((s) => {
+      // left navigation item present
+      page.waitForSelector("a[href='#/overview']").then((s) => {
         s!.dispose();
         return false;
       }),
+      // or product selection displayed
       page.waitForSelector("button[form='productSelectionForm']").then((s) => {
         s!.dispose();
         return true;

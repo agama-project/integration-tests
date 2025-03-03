@@ -15,7 +15,7 @@ import { parse } from "./lib/cmdline";
 import { it, test_init, page } from "./lib/helpers";
 
 import { loginCheck } from "./checks/login";
-import { setInitialRootPassword } from "./checks/set_root_password";
+import { setRootPassword } from "./checks/set_root_password";
 
 // parse options from the command line
 const options = parse((c) => c.description("Automatically take the Agama screenshots"));
@@ -51,9 +51,12 @@ describe("Agama screenshots", function () {
       // wait until the button is enabled
       .setWaitForEnabled(true)
       .click();
+
+    await page.waitForSelector("main ::-p-text('Overview')", { timeout: 60_000 });
   });
 
-  setInitialRootPassword(options.rootPassword);
+  // set the root password so there is no warning displayed in the overview
+  setRootPassword("test");
 
   it("should take overview page screenshot", async function () {
     await page.locator("main ::-p-text('Overview')").wait();
@@ -68,17 +71,19 @@ describe("Agama screenshots", function () {
 
   it("should take language selection screenshot", async function () {
     await page.locator("a[href='#/l10n/locale/select']").click();
-    await page.type("input", "english");
+    await page.locator("::-p-text('Afrikaans')").wait();
+    await page.type("input", "English");
     // wait until the list is filtered and the non English entries are removed from the page
-    await page.waitForSelector("::-p-text('Afrikaans')", { hidden: true });
+    await page.locator("::-p-text('Afrikaans')").setVisibility("hidden").wait();
+
     await screenshot("select-language");
-    await page.locator("button::-p-text(Cancel)").click();
+    await page.locator("a::-p-text(Cancel)").click();
   });
 
   it("should take storage page screenshot", async function () {
     await page.locator("a[href='#/storage']").click();
-    await page.locator("h3::-p-text('Final layout')").wait();
-    await screenshot("storage");
+    await page.locator("h3::-p-text('Result')").wait();
+    await screenshot("storage-overview");
   });
 
   it("should take network page screenshot", async function () {
