@@ -1,5 +1,8 @@
 # Agama Integration Tests
 
+[![CI](https://github.com/agama-project/integration-tests/actions/workflows/ci.yml/badge.svg)](https://github.com/agama-project/integration-tests/actions/workflows/ci.yml)
+[![CI - Integration Tests](https://github.com/agama-project/agama/actions/workflows/ci-integration-tests.yml/badge.svg)](https://github.com/agama-project/agama/actions/workflows/ci-integration-tests.yml)
+
 This is repository contains support for writing integration tests for Agama and few example tests.
 
 It uses the [Puppeteer](https://pptr.dev/) library for driving and communicating with a web browser.
