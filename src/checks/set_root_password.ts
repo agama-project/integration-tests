@@ -19,6 +19,6 @@ export function setRootPassword(password: string) {
     await page.locator("input#passwordConfirmation").setVisibility("hidden").wait();
 
     await page.locator("a[href='#/overview']").click();
-    await page.locator("main ::-p-text('Overview')").wait();
+    await page.locator("main ::-p-text('System Information')").wait();
   });
 }
