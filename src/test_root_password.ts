@@ -14,9 +14,10 @@ import { it, test_init, page } from "./lib/helpers";
 import { loginCheck } from "./checks/login";
 import { optionalProductSelection } from "./checks/optional_product_selection";
 import { setRootPassword } from "./checks/set_root_password";
+import { OptionValues } from "commander";
 
 // parse options from the command line
-const options = parse();
+const options: OptionValues = parse();
 
 describe("Agama test", function () {
   test_init(options);

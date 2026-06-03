@@ -7,6 +7,7 @@ import zlib from "zlib";
 import * as puppeteer from "puppeteer-core";
 // see https://nodejs.org/docs/latest-v20.x/api/test.html
 import { it as testIt, before, after } from "node:test";
+import { OptionValues } from "commander";
 
 export let page: puppeteer.Page;
 let browser: puppeteer.Browser;
@@ -78,7 +79,7 @@ export async function finishBrowser() {
   if (browser) await browser.close();
 }
 
-export function test_init(options) {
+export function test_init(options: OptionValues) {
   before(async function () {
     ({ page } = await startBrowser(!options.headed, options.delay, options.browser, options.url));
   });
@@ -98,7 +99,7 @@ export function setContinueOnError(enabled: boolean) {
 
 // helper function, dump the index.css file so the HTML dump can be properly displayed
 async function dumpCSS() {
-  const cssData = [];
+  const cssData: Buffer[] = [];
   const downloader = url.startsWith("https://") ? https : http;
 
   return new Promise((resolve, reject) => {
