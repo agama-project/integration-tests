@@ -7,6 +7,7 @@ import zlib from "zlib";
 import * as puppeteer from "puppeteer-core";
 // see https://nodejs.org/docs/latest-v20.x/api/test.html
 import { it as testIt, before, after } from "node:test";
+import { OptionValues } from "commander";
 
 export let page: puppeteer.Page;
 let browser: puppeteer.Browser;
@@ -78,7 +79,7 @@ export async function finishBrowser() {
   if (browser) await browser.close();
 }
 
-export function test_init(options) {
+export function test_init(options: OptionValues) {
   before(async function () {
     ({ page } = await startBrowser(!options.headed, options.delay, options.browser, options.url));
   });
