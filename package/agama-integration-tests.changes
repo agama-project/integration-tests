@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jun  3 15:26:21 UTC 2026 - Ladislav Slezák <lslezak@suse.com>
+
+- Update to the latest Agama web UI
+- Updated NPM dependencies
+
+-------------------------------------------------------------------
 Wed Jan 15 09:14:32 UTC 2025 - Ladislav Slezák <lslezak@suse.com>
 
 - Code refactoring (gh#agama-project/integration-tests#1)
