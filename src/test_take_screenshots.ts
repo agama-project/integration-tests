@@ -52,16 +52,11 @@ describe("Agama screenshots", function () {
       .setWaitForEnabled(true)
       .click();
 
-    await page.waitForSelector("main ::-p-text('Overview')", { timeout: 60_000 });
+    await page.waitForSelector("main ::-p-text('System Information')", { timeout: 60_000 });
   });
 
   // set the root password so there is no warning displayed in the overview
   setRootPassword("test");
-
-  it("should take overview page screenshot", async function () {
-    await page.locator("main ::-p-text('Overview')").wait();
-    await screenshot("overview");
-  });
 
   it("should take localization page screenshot", async function () {
     await page.locator("a[href='#/l10n']").click();
@@ -77,40 +72,49 @@ describe("Agama screenshots", function () {
     await page.locator("::-p-text('Afrikaans')").setVisibility("hidden").wait();
 
     await screenshot("select-language");
-    await page.locator("a::-p-text(Cancel)").click();
+    await page.locator("a[href='#/overview']").click();
   });
 
   it("should take storage page screenshot", async function () {
     await page.locator("a[href='#/storage']").click();
     await page.locator("h3::-p-text('Result')").wait();
     await screenshot("storage-overview");
+    await page.locator("a[href='#/overview']").click();
   });
 
   it("should take network page screenshot", async function () {
     await page.locator("a[href='#/network']").click();
-    await page.locator("h3::-p-text('Wired')").wait();
+    await page.locator("::-p-text('Add connection')").wait();
     await screenshot("network");
+    await page.locator("a[href='#/overview']").click();
   });
 
   it("should take software page screenshot", async function () {
     await page.locator("a[href='#/software']").click();
-    await page.locator("h3::-p-text('Selected patterns')").wait();
+    await page.locator("h3::-p-text('Additional patterns')").wait();
     await screenshot("software");
+    await page.locator("a[href='#/overview']").click();
   });
 
   it("should take user page screenshot", async function () {
     await page.locator("a[href='#/users']").click();
-    await page.locator("h3::-p-text('First user')").wait();
+    await page.locator("::-p-text('Administrator account')").wait();
     await screenshot("users");
+    await page.locator("a[href='#/overview']").click();
+  });
+
+  it("should take overview page screenshot", async function () {
+    await page.locator("main ::-p-text('System Information')").wait();
+    // ensure the software proposal is ready
+    await page.locator("main ::-p-text('No desktop selected')").wait();
+    await screenshot("overview");
   });
 
   it("should take installation confirmation popup screenshot", async function () {
-    // go to the overview
-    await page.locator("a[href='#/overview']").click();
-    await page.locator("main ::-p-text('Overview')").wait();
-    // click the install button
-    await page.locator("button::-p-text(Install)").click();
-    await page.locator("::-p-text('Confirm Installation')").wait();
+    await page.locator("main ::-p-text('System Information')").wait();
+    // click the big install button
+    await page.locator("button.pf-v6-c-button.pf-m-display-lg").click();
+    await page.locator("::-p-text('Confirm and install')").wait();
     await screenshot("install-button");
   });
 });

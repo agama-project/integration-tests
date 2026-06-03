@@ -7,8 +7,8 @@ export function optionalProductSelection(productName: string) {
   it("should optionally display the product selection dialog", async function () {
     // Either the overview is displayed or there is the product selection page.
     const productSelectionDisplayed: boolean = await Promise.any([
-      // left navigation item present
-      page.waitForSelector("a[href='#/overview']").then((s) => {
+      // system overview box visible
+      page.waitForSelector("main ::-p-text('System Information')").then((s) => {
         s!.dispose();
         return false;
       }),

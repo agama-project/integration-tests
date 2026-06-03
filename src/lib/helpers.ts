@@ -98,7 +98,7 @@ export function setContinueOnError(enabled: boolean) {
 
 // helper function, dump the index.css file so the HTML dump can be properly displayed
 async function dumpCSS() {
-  const cssData = [];
+  const cssData: Buffer[] = [];
   const downloader = url.startsWith("https://") ? https : http;
 
   return new Promise((resolve, reject) => {
