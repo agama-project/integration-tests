@@ -6,8 +6,8 @@ export function setRootPassword(password: string) {
     // go to the authentication page
     await page.locator("a[href='#/users']").click();
 
-    // click the root login menu (currently there is only a single menu on the page)
-    await page.locator(".pf-v6-c-menu-toggle__text").click();
+    // click the root login menu (use id as there are also top level menu for more options )
+    await page.locator("button[id='rootAuthMode']").click();
     // select the "Password" option
     await page.locator("button.pf-v6-c-menu__item ::-p-text('Password')").click();
 
