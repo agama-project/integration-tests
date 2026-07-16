@@ -27,7 +27,7 @@ export function setRootPassword(password: string) {
     ]);
 
     // navigate back to the main page
-    await page.locator("a[href='#/overview']").click();
+    await page.locator("a[href='#/']").click();
     await page.locator("main ::-p-text('System Information')").wait();
   });
 }
