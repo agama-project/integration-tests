@@ -5,6 +5,7 @@ Tue Jul 28 16:09:43 UTC 2026 - Martin Vidner <mvidner@suse.com>
   - ws 8.21.1, CVE-2026-48779 (bsc#1268961)
 - update development dependencies:
   - js-yaml 4.3.0, CVE-2026-53550 (bsc#1268851)
+  - brace-expansion 5.0.8, CVE-2026-13149 CVE-2025-5889 (bsc#1269927 bsc#1244366)
 - updated on Jun 3 already, listing its references for tracking:
   - basic-ftp 5.3.1, CVE-2026-27699 (bsc#1258911)
 
