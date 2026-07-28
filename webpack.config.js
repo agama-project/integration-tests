@@ -72,6 +72,11 @@ module.exports = {
       data.dependencies.forEach((d) => delete d.critical);
       return data;
     }),
+    // ignore proxy-agent dynamic import warnings from @puppeteer/browsers since
+    // it is a handled optional dependency that is caught at runtime
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^proxy-agent$/,
+    }),
     // prepend a hashbang at the beginning of the generated file
     new webpack.BannerPlugin({ banner: "#! /usr/bin/env node", raw: true, test: /^test_.*\.js$/ }),
     // make the test JS files executable
