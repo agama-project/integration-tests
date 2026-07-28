@@ -29,6 +29,9 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
   },
+  externals: {
+    "puppeteer-core": "commonjs puppeteer-core",
+  },
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
