@@ -9,7 +9,9 @@
     "devel": "webpack --mode development",
     "watch": "webpack --mode development --watch",
     "eslint": "eslint src/ *.js",
-    "eslint:fix": "eslint --fix src/ *.js"
+    "eslint:fix": "eslint --fix src/ *.js",
+    "prettier": "prettier . --check",
+    "prettier:write": "prettier . --write"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2.12.1",
@@ -21,11 +23,11 @@
     "eslint-plugin-promise": "^7.2.1",
     "eslint-webpack-plugin": "^4.2.0",
     "neostandard": "^0.13.0",
-    "prettier": "^3.8.3",
-    "ts-loader": "^9.6.0",
+    "prettier": "^3.9.6",
+    "ts-loader": "^9.6.2",
     "typescript": "^6.0.3",
-    "webpack": "^5.107.2",
-    "webpack-cli": "^7.0.3"
+    "webpack": "^5.108.4",
+    "webpack-cli": "^7.2.1"
   },
   "dependencies": {
     "bufferutil": "^4.1.0",
@@ -35,5 +37,10 @@
   },
   "overrides": {
     "brace-expansion": "^5.0.7"
+  },
+  "allowScripts": {
+    "bufferutil@4.1.0": true,
+    "unrs-resolver@1.12.2": true,
+    "utf-8-validate@6.0.6": true
   }
 }
