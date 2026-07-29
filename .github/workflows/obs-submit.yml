@@ -13,6 +13,9 @@ on:
   # allow running manually
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   update_staging:
     uses: agama-project/agama/.github/workflows/obs-staging-shared.yml@master
