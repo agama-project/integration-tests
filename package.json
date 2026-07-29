@@ -32,5 +32,8 @@
     "commander": "^15.0.0",
     "puppeteer-core": "22.15.0",
     "utf-8-validate": "^6.0.6"
+  },
+  "overrides": {
+    "brace-expansion": "^5.0.7"
   }
 }
