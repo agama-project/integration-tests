@@ -1,0 +1,22 @@
+diff --git a/node_modules/puppeteer-core/lib/es5-iife/puppeteer-core-browser.js b/node_modules/puppeteer-core/lib/es5-iife/puppeteer-core-browser.js
+index c3af1ee..e9f232d 100644
+--- a/node_modules/puppeteer-core/lib/es5-iife/puppeteer-core-browser.js
++++ b/node_modules/puppeteer-core/lib/es5-iife/puppeteer-core-browser.js
+@@ -24367,7 +24367,7 @@ var Puppeteer = function (exports, _error, _suppressed, _PuppeteerURL, _LazyArg,
+       cdpConnection,
+       closeCallback
+     } = await getBiDiConnection(connectionTransport, url, options);
+-    const BiDi = await Promise.resolve().then(() => _interopRequireWildcard(require(/* webpackIgnore: true */'./bidi/bidi.js')));
++    const BiDi = await Promise.resolve().then(() => _interopRequireWildcard(require('./bidi/bidi.js')));
+     const bidiBrowser = await BiDi.BidiBrowser.create({
+       connection: bidiConnection,
+       cdpConnection,
+@@ -24388,7 +24388,7 @@ var Puppeteer = function (exports, _error, _suppressed, _PuppeteerURL, _LazyArg,
+    * to BiDi over CDP.
+    */
+   async function getBiDiConnection(connectionTransport, url, options) {
+-    const BiDi = await Promise.resolve().then(() => _interopRequireWildcard(require(/* webpackIgnore: true */'./bidi/bidi.js')));
++    const BiDi = await Promise.resolve().then(() => _interopRequireWildcard(require('./bidi/bidi.js')));
+     const {
+       slowMo = 0,
+       protocolTimeout

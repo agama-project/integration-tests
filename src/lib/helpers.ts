@@ -17,7 +17,7 @@ let url: string;
 const dir = "log";
 
 interface BrowserSettings {
-  product: puppeteer.Product;
+  browser: "chrome" | "firefox";
   executablePath: string;
 }
 
@@ -26,17 +26,17 @@ function browserSettings(name: string): BrowserSettings {
   switch (name.toLowerCase()) {
     case "firefox":
       return {
-        product: "firefox",
+        browser: "firefox",
         executablePath: "/usr/bin/firefox",
       };
     case "chrome":
       return {
-        product: "chrome",
+        browser: "chrome",
         executablePath: "/usr/bin/google-chrome-stable",
       };
     case "chromium":
       return {
-        product: "chrome",
+        browser: "chrome",
         executablePath: "/usr/bin/chromium",
       };
     default:
@@ -55,7 +55,7 @@ export async function startBrowser(
     // "webDriverBiDi" does not work with old FireFox, comment it out if needed
     protocol: "webDriverBiDi",
     headless,
-    ignoreHTTPSErrors: true,
+    acceptInsecureCerts: true,
     timeout: 30000,
     slowMo,
     defaultViewport: {
@@ -150,7 +150,7 @@ async function dumpCSS() {
 export async function dumpPage(label: string) {
   // base file name for the dumps
   const name = path.join(dir, label.replace(/[^a-zA-Z0-9]/g, "_"));
-  await page.screenshot({ path: name + ".png" });
+  await page.screenshot({ path: `${name}.png` });
   const html = await page.content();
   fs.writeFileSync(name + ".html", html);
 }
