@@ -29,7 +29,8 @@ const dir = "screenshots";
 // take screenshot of the current page
 async function screenshot(file: string) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-  await page.screenshot({ path: path.join(dir, file + ".png") });
+  const imgPath = path.join(dir, file);
+  await page.screenshot({ path: `${imgPath}.png` });
 }
 
 describe("Agama screenshots", function () {
