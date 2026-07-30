@@ -11,8 +11,7 @@
     "eslint": "eslint src/ *.js",
     "eslint:fix": "eslint --fix src/ *.js",
     "prettier": "prettier . --check",
-    "prettier:write": "prettier . --write",
-    "postinstall": "patch-package"
+    "prettier:write": "prettier . --write"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2.12.1",
@@ -33,7 +32,6 @@
   "dependencies": {
     "bufferutil": "^4.1.0",
     "commander": "^15.0.0",
-    "patch-package": "^8.0.1",
     "puppeteer-core": "24.14.0",
     "utf-8-validate": "^6.0.6"
   },
