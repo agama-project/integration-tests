@@ -5,10 +5,6 @@ on:
   push:
     branches:
       - main
-      - release
-    # runs when creating a release tag
-    tags:
-      - v[0-9]*
 
   # allow running manually
   workflow_dispatch:
