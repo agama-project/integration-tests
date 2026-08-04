@@ -23,7 +23,7 @@ License:        GPL-2.0-or-later
 URL:            https://github.com/agama-project/agama-integration-tests
 # source_validator insists that if obscpio has no version then
 # tarball must neither
-Source0:        agama-integration-tests.tar
+Source0:        agama.tar
 Source10:       package-lock.json
 Source11:       node_modules.spec.inc
 Source12:       node_modules.sums
@@ -31,7 +31,7 @@ Source12:       node_modules.sums
 BuildArch:      noarch
 BuildRequires:  local-npm-registry
 BuildRequires:  nodejs-devel
-Requires:       nodejs(engine) >= 18
+Requires:       nodejs(engine) >= 22
 
 %description
 This package provides only few example integration tests, the real tests should be added from
@@ -41,7 +41,7 @@ All needed NPM dependencies are bundled into the tests themselves, there are no 
 dependencies.
 
 %prep
-%autosetup -p1 -n agama-integration-tests
+%autosetup -p1 -n agama
 
 %build
 rm -f package-lock.json
@@ -57,7 +57,7 @@ ESLINT=0 npm run build
 
 %install
 install -D -d -m 0755 %{buildroot}%{_datadir}/agama/integration-tests
-cp -aR %{_builddir}/agama-integration-tests/dist/* %{buildroot}%{_datadir}/agama/integration-tests
+cp -aR %{_builddir}/agama/dist/* %{buildroot}%{_datadir}/agama/integration-tests
 
 %files
 %defattr(-,root,root,-)
