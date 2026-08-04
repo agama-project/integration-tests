@@ -10,7 +10,7 @@
     https://github.com/agama-project/agama/.github/workflows/obs-staging-shared.yml
     action when submitting to OBS -->
     <param name="revision">main</param>
-    <param name="filename">agama-integration-tests</param>
+    <param name="filename">agama</param>
     <param name="without-version">enable</param>
     <param name="extract">package-lock.json</param>
     <param name="extract">package/agama-integration-tests.changes</param>
