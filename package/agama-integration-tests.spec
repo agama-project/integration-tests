@@ -26,7 +26,6 @@ URL:            https://github.com/agama-project/agama-integration-tests
 Source0:        agama.tar
 Source10:       package-lock.json
 Source11:       node_modules.spec.inc
-Source12:       node_modules.sums
 %include %_sourcedir/node_modules.spec.inc
 BuildArch:      noarch
 BuildRequires:  local-npm-registry
